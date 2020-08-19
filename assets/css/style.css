@@ -1,0 +1,99 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-bottom: 30px;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 20px;
+}
+
+header h3 {
+font-size: 15px;
+color: rgb(110, 4, 110);
+text-decoration: none;
+}
+
+.card {
+    display: block;
+    border: 2px solid black;
+    background-color: oldlace;
+    border-radius: 12px;
+    box-shadow: 2px 2px 4px gray;
+    margin: 10%;
+    min-height: 400px;
+    align-content: center;
+}
+
+.card h1 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 30px;
+    text-align: center;
+    padding-top: 15px;
+}
+
+.card h3 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 20px;
+    text-align: center;
+    padding: 25px 25px 100px 25px;
+}
+
+.button .btn {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 30px;
+    background-color:rgb(110, 4, 110);
+    border-radius: 10px;
+    color: white;
+    text-shadow: 1px 1px 2px black;
+    box-shadow: 1px 1px 2px black;
+    padding: 5px;
+    margin: auto;
+    display: block;  
+}
+
+.ans-button {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 25px;
+    background-color: rgb(110, 4, 110);
+    color: white;
+    text-shadow: 1px 1px 2px black;
+    box-shadow: 1px 1px 2px black;
+    padding: 5px;
+    margin: 10px 0 0 40px;
+    display: block;
+    width: 150px;
+    border-radius: 15px;;
+}
+
+.quest-title {
+    margin-top: 20px;
+    margin-left: 40px;
+    margin-bottom: 20px;
+    font-size: 30px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: left;
+}
+
+.question {
+    align-content: center;
+}
+
+.checkAns {
+    border-top: 1px solid blue;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-style: italic;
+    color: lightslategrey;
+    text-align: left;
+    margin-left: 40px;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+
+

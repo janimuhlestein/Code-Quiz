@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Quiz</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header class = "header">
+        <h3 class = "high-score">
+           <a href = "#">View High Scores</a>
+        </h3>
+        <h3 class = "timer">
+            Timer: <timer class = "counter" id = "counter"></timer>
+        </h3>
+    </header>
+    <main>
+        <div class = "card" id = "card">
+        <h1>
+            Coding Quiz Challenge!
+        </h1>
+        <h3>
+            Try to answer the questions within a 10 second limit. Keep in mind 
+            that a wrong answer will penalize you. If you get a wrong answer, 
+            you will lose 20 seconds from the clock. Press start to begin.
+        </h3>
+        <div class = "button">
+        <button class = "btn" id = "start-btn">Start</button></div>
+    </div>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+    <script src = "assets/js/script.js"></script>
+    </main>
+    
+</body>
+</html>
