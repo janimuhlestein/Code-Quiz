@@ -1,0 +1,173 @@
+var startButtonEl = document.querySelector("#start-btn");
+var ansButtonEl = document.getElementsByClassName("ans-button");
+var timeLeft = document.getElementById("counter");
+
+var correctAns;
+var answer;
+var timer;
+var seconds = 60;
+var count = 0;
+
+var myTimer = function() {
+   if(seconds > 0) {
+    var counter = document.getElementById("counter");
+    counter.textContent = String(seconds);
+    console.log(seconds);
+    seconds--;
+}
+else{
+    clearInterval(timer);
+    alert("time's up!");
+}
+}
+
+var resetTimer = function(){
+    clearInterval(timer);
+    var time = document.getElementById("counter").textContent;
+    time = parseInt(time);
+    seconds = time -20;
+    if(time > 1){
+        timer= setInterval(myTimer,1000);
+    }
+    else {
+        alert("time's up");
+    }
+}
+
+var question1 = {
+    title: "Commonly used data types do not include _____",
+    answer1: "Strings",
+    answer2: "Alerts",
+    answer3: "Booleans",
+    answer4: "Integers",
+    correctAns: "Alerts",
+}
+
+var question2 = {
+    title: "All of the following are good debugging tools, except ______",
+    answer1: "Console.log",
+    answer2: "bash",
+    answer3: "debugger;",
+    answer4: "javascript",
+    correctAns: "bash"
+}
+
+var question3 = {
+    title: "What is the command to push code to GitGub?",
+    answer1: "git push origin master",
+    answer2: "git config",
+    answer3: "git branch",
+    answer4: "git clone",
+    correctAns: "git push origin master"
+}
+
+var question4 = {
+    title: "The * selector selects all HTML elements and applies a style to them.",
+    answer1: "true",
+    answer2: "false",
+    correctAns: "true"
+}
+
+var question5 = {
+    title: "box-sizing is a property that changes the calculation of _____",
+    answer1: "width",
+    answer2: "height",
+    answer3: "margin",
+    answer4: "both width and height",
+    correctAns: "both width and height"
+}
+
+var questionList = [question1, question2, question3, question4, question5];
+
+//We have to check all the answers
+var checkAns = function (ans) {
+    cardEl = document.querySelector("#card");
+    var newDivEl = document.createElement("div");
+    answer = ans;
+    newDivEl.className = "checkAns";
+    if(ans === correctAns) {
+        newDivEl.textContent = "Correct!"
+        cardEl.appendChild(newDivEl);
+    }
+    else {
+        newDivEl.textContent = "Incorrect!"
+        cardEl.appendChild(newDivEl);
+       // resetTimer();
+    }
+}
+
+var getQuestion = function() {
+    //stop the eventListener for the start button
+    startButtonEl.removeEventListener("click", startQuiz);
+   // questionList = _.shuffle(questionList);
+    var questObj;
+    questObj = questionList[0];
+    console.log(questObj.title);
+   //clear out the card html
+   var cardEl = document.querySelector("#card");
+   cardEl.innerHTML = "";
+   var titleEl = document.createElement("h2");
+   titleEl.className = "quest-title";
+   titleEl.textContent = questObj.title;
+   cardEl.appendChild(titleEl);
+
+      var newDivEl = document.createElement("div");
+      newDivEl.className = "question";
+      var numAnswers = 0;
+      var answers = [];
+
+      //some questions have more answers than others
+      //let's get the number of answers in this question
+      var props = Object.getOwnPropertyNames(questObj);
+      for(i=0; i<props.length; i++){
+          if(props[i].includes("answer")){
+              numAnswers ++;
+          }
+      }
+      var answers = [];
+      if(numAnswers === 4){
+          answers = [questObj.answer1, questObj.answer2, questObj.answer3, questObj.answer4];
+      }
+          else{
+              answers = [questObj.answer1, questObj.answer2];
+          }
+          //shuffle the answers, too
+   answers = _.shuffle(answers);
+   for(var i = 0; i < answers.length; i++){
+   var ansEl = document.createElement("button");
+   ansEl.className = "ans-button";
+   ansEl.id = "ans-button" + count++;
+   ansEl.textContent = answers[i];
+   newDivEl.appendChild(ansEl);
+   cardEl.appendChild(newDivEl);
+   }
+   return questObj;
+ }
+
+  var getAnswers = function(correctObj){
+    correctAns = correctObj.correctAns;
+    var buttonClicked = ansButtonEl;
+    //check the answer
+    for(i=0; i<buttonClicked.length; i++){
+         ansButtonEl[i].addEventListener("click", function() {
+             checkAns(this.textContent);
+         });
+         //after they've clicked, kill the listener
+         ansButtonEl[i].removeEventListener("click", function() {
+             checkAns(this.textContent);
+         });
+     }
+
+  }  
+
+var startQuiz = function(){
+    var length = questionList.length;
+    console.log(length);
+   var correct = getQuestion();
+   getAnswers(correct);
+   questionList.splice(1,1);
+   console.log(length);
+
+}
+
+startButtonEl.addEventListener("click", startQuiz);

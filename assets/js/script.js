@@ -1,37 +1,9 @@
-var startButton = document.querySelector("#start-btn");
-var ansButton = document.getElementsByClassName("ans-button");
-//console.log(ansButton);
-var correctAns;
-var answer;
-var timer;
-var seconds = 60;
+var startButtonEl = document.querySelector("#start-btn");
+var ansButtonEl = document.getElementsByClassName("ans-button");
+var timeLeft = document.getElementById("counter");
+var cardEl = document.querySelector("#card");
+var correctAns = "";
 var count = 0;
-
-var myTimer = function() {
-   if(seconds > 0) {
-    var counter = document.getElementById("counter");
-    counter.textContent = String(seconds);
-    console.log(seconds);
-    seconds--;
-}
-else{
-    clearInterval(timer);
-    alert("time's up!");
-}
-}
-
-var resetTimer = function(){
-    clearInterval(timer);
-    var time = document.getElementById("counter").textContent;
-    time = parseInt(time);
-    seconds = time -20;
-    if(time > 1){
-        timer= setInterval(myTimer,1000);
-    }
-    else {
-        alert("time's up");
-    }
-}
 
 var question1 = {
     title: "Commonly used data types do not include _____",
@@ -76,91 +48,91 @@ var question5 = {
     correctAns: "both width and height"
 }
 
-//We have to check all the answers
-var checkAns = function (ans) {
-    var card = document.querySelector("#card");
-    var newDiv = document.createElement("div");
-    answer = ans;
-    newDiv.className = "checkAns";
-    if(ans === correctAns) {
-        newDiv.textContent = "Correct!"
-        card.appendChild(newDiv);
-    }
-    else {
-        newDiv.textContent = "Incorrect!"
-        card.appendChild(newDiv);
-        resetTimer();
-    }
-}
-//ask the questions (shuffle questions in case they do it several times)
-var question = function() {
-    var questionList = [question1, question2, question3, question4, question5];
+var questionList = [question1, question2, question3, question4, question5];
 
-     questionList = _.shuffle(questionList);
-     var questObj = questionList[0];
-    //clear out the card html
-    var card = document.querySelector("#card");
-    card.innerHTML = "";
-    var title = document.createElement("h2");
-    title.className = "quest-title";
-    title.textContent = questObj.title;
-    card.appendChild(title);
-
-       var newDivEl = document.createElement("div");
-       newDivEl.className = "question";
-       var answers = [questObj.answer1, questObj.answer2, questObj.answer3, questObj.answer4];
-       //shuffle the answers, too
-       answers = _.shuffle(answers);
-       for(var i = 0; i < answers.length; i++){
-       var ans = document.createElement("button");
-       ans.className = "ans-button";
-       ans.id = "ans-button" + count++;
-       ans.textContent = answers[i];
-       newDivEl.appendChild(ans);
-       card.appendChild(newDivEl);
+var askQuestion = function(questNo) {
+    //clear the card
+    cardEl.innerHTML = "";
+    questObj = questNo;
+    //ask the question
+    var titleEl = document.createElement("h1");
+    titleEl.className = "questTitle";
+    titleEl.textContent = questObj.title;
+    cardEl.appendChild(titleEl);
+    //create a new div to hold the buttons
+    var ansDivEl = document.createElement("div");
+    ansDivEl.className = "answer";
+    var answers = [
+        questObj.answer1, questObj.answer2, questObj.answer3, questObj.answer4
+    ];
+    for(i=0; i<answers.length; i++){
+        var ansElement = document.createElement("button");
+        ansElement.className = "ans-button";
+        ansElement.id = "ans-button" + count++;
+        ansElement.textContent = answers[i];
+        cardEl.appendChild(ansElement);
+        cardEl.appendChild(ansDivEl);
     }
-    correctAns = questObj.correctAns;
-    startButton.removeEventListener("click", startQuiz);
-    //Let's remove that question from the shuffle
-    questionList.splice(0,1);
-    var buttonClicked = ansButton;
-    //check the answer
+
+    //add the answer buttons
+    //add the listeners\
+    var buttonClicked = ansButtonEl;
     for(i=0; i<buttonClicked.length; i++){
-        // var ansButton=document.getElementById("#ans-button[i]");
-         console.log(buttonClicked[i]);
- 
-         ansButton[i].addEventListener("click", function() {
-             checkAns(this.textContent);
-         });
-         //after they've clicked, kill the listener
-         ansButton[i].removeEventListener("click", function() {
-             checkAns(this.textContent);
-         });
-     }
-
-}
-
-var startQuiz = function() {
-    //once the start button is clicked, then start the quiz
-    //start countdown
-    question();
-    timer = setInterval(myTimer,1000);
-    /*
-
-    for(i=0; i<ansButton.length; i++){
-       // var ansButton=document.getElementById("#ans-button[i]");
-        console.log(ansButton[i]);
-
-        ansButton[i].addEventListener("click", function() {
+        ansButtonEl[i].addEventListener("click", function() {
             checkAns(this.textContent);
         });
         //after they've clicked, kill the listener
-        ansButton[i].removeEventListener("click", function() {
+        ansButtonEl[i].removeEventListener("click", function() {
             checkAns(this.textContent);
         });
-        
     }
-    */
+    
+    //after they've clicked, kill the event listeners
+    
+    correctAns = questObj.correctAns;
+
+
 }
 
-startButton.addEventListener("click", startQuiz);
+var checkAns = function(choice){
+    debugger;
+    cardEl = document.querySelector("#card");
+    var newDivEl = document.createElement("div");
+    newDivEl.className = "checkAns";
+    newDivEl.className = "checkAns";
+    if(choice === correctAns){
+        newDivEl.textContent = "Correct";
+        cardEl.appendChild(newDivEl);
+    }
+    else {
+        newDivEl.textContent = "Incorrect";
+        cardEl.appendChild(newDivEl);
+    }
+    if(questionList.length != 0){
+        for(i=0; i<questionList.length; i++) {
+            askQuestion(questionList[i]);
+            questionList.splice(0,1);
+    }
+    else{
+        //clear the card
+        cardEl.innerHTML = "";
+        var endTitleEl  = document.createElement("h1");
+        endTitleEl.classsName = "card";
+        endTitleEl.textContent = "You've completed the quiz!";
+        cardEl.appendChild(endTitle);
+    }
+
+    }
+
+}
+
+var nextQuest = function(num) {
+    cardEl.InnerHTML = "";
+}
+
+var start = function() {
+askQuestion(question1);
+
+}
+
+startButtonEl.addEventListener("click", start);
