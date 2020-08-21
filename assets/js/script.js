@@ -1,10 +1,14 @@
+//Let's set up the global variables we'll need
 var startButtonEl = document.querySelector("#start-btn");
 var ansButtonEl = document.getElementsByClassName("ans-button");
 var timeLeft = document.getElementById("counter");
 var cardEl = document.querySelector("#card");
 var correctAns = "";
 var count = 0;
+var timer;
+var seconds = 60;
 
+//Create the questions
 var question1 = {
     title: "Commonly used data types do not include _____",
     answer1: "Strings",
@@ -18,7 +22,7 @@ var question2 = {
     title: "All of the following are good debugging tools, except ______",
     answer1: "Console.log",
     answer2: "bash",
-    answer3: "debugger;",
+    answer3: "debugger",
     answer4: "javascript",
     correctAns: "bash"
 }
@@ -33,10 +37,13 @@ var question3 = {
 }
 
 var question4 = {
-    title: "The * selector selects all HTML elements and applies a style to them.",
-    answer1: "true",
-    answer2: "false",
-    correctAns: "true"
+    title: "What function would you call to check whether a button was clicked?",
+    answer1: "button.click()",
+    answer2: "getClick()",
+    answer3: "click.check()",
+    //make this answer fit on the button
+    answer4: "addEvent Listener",
+    correctAns: "addEvent Listener"
 }
 
 var question5 = {
@@ -48,13 +55,42 @@ var question5 = {
     correctAns: "both width and height"
 }
 
+//create an array of the questions so that we can iterate through it
 var questionList = [question1, question2, question3, question4, question5];
 
+var myTimer = function() {
+    if(seconds > 0) {
+     var counter = document.getElementById("counter");
+     counter.textContent = String(seconds);
+     console.log(seconds);
+     seconds--;
+ }
+ else{
+     clearInterval(timer);
+     alert("time's up!");
+ }
+ }
+ 
+ var resetTimer = function(){
+     clearInterval(timer);
+     var time = document.getElementById("counter").textContent;
+     time = parseInt(time);
+     seconds = time -20;
+     if(time > 1){
+         timer= setInterval(myTimer,1000);
+         runQuiz;
+     }
+     else {
+        quizEnd;
+     }
+ }
+
+//ask a question
 var askQuestion = function(questNo) {
     //clear the card
     cardEl.innerHTML = "";
     questObj = questNo;
-    //ask the question
+    //display a title
     var titleEl = document.createElement("h1");
     titleEl.className = "questTitle";
     titleEl.textContent = questObj.title;
@@ -65,74 +101,78 @@ var askQuestion = function(questNo) {
     var answers = [
         questObj.answer1, questObj.answer2, questObj.answer3, questObj.answer4
     ];
-    for(i=0; i<answers.length; i++){
+    //add the butttons to the div
+        for(i=0; i<answers.length; i++){
         var ansElement = document.createElement("button");
         ansElement.className = "ans-button";
         ansElement.id = "ans-button" + count++;
         ansElement.textContent = answers[i];
-        cardEl.appendChild(ansElement);
+        ansDivEl.appendChild(ansElement);
         cardEl.appendChild(ansDivEl);
     }
-
-    //add the answer buttons
-    //add the listeners\
-    var buttonClicked = ansButtonEl;
-    for(i=0; i<buttonClicked.length; i++){
-        ansButtonEl[i].addEventListener("click", function() {
-            checkAns(this.textContent);
-        });
-        //after they've clicked, kill the listener
-        ansButtonEl[i].removeEventListener("click", function() {
-            checkAns(this.textContent);
-        });
-    }
-    
-    //after they've clicked, kill the event listeners
-    
+    //set the correct answer
     correctAns = questObj.correctAns;
+    //add the listener, and call for a check of the answer then call checkAns
+    //listener should be removed because of once: true option.
+    ansDivEl.addEventListener("click", function(){
+        checkAns(event.target.textContent);
+    }, { once: true });
+};
 
+//check the answer and inform the user
+var checkAns = function(textContent){
+    //add a new div for the information
+    var checkTxt = document.createElement("div");
+    checkTxt.className = "checkAns";
+    //if they got it right, let them know, then run to the next question
+    if(textContent === correctAns){
+        checkTxt.textContent = "Correct";
+        cardEl.appendChild(checkTxt);
+        //cut off the question list so that we don't just keep repeating questions
+        questionList.splice(0,1);
+        //had to have a short timeout because otherwise my computer was running so fast 
+        //I never saw the text. It just displayed the next question!
+        setTimeout(()=> { runQuiz(); }, 2000);
+    }
+    //If they got it wrong, let them know, and cut the timer by 20 seconds, Ouch!
+    else {
+        checkTxt.textContent = "Incorrect";
+        cardEl.appendChild(checkTxt);
+        questionList.splice(0,1);
+        setTimeout(()=> { runQuiz(); }, 2000);
+        //take 20 seconds off the timer
+        resetTimer();
+    }
+};
 
-}
-
-var checkAns = function(choice){
-    debugger;
-    cardEl = document.querySelector("#card");
-    var newDivEl = document.createElement("div");
-    newDivEl.className = "checkAns";
-    newDivEl.className = "checkAns";
-    if(choice === correctAns){
-        newDivEl.textContent = "Correct";
-        cardEl.appendChild(newDivEl);
+//Our main function to run the quiz.
+var runQuiz = function() {
+    //first, get the time
+    var timer = document.getElementById("counter").textContent;
+    //If the question list array is not empty, or the timer is not up, ask questions
+    if(questionList.length !=0 && timer != "0") {
+           var questNum = questionList[0];
+          askQuestion(questNum);
     }
     else {
-        newDivEl.textContent = "Incorrect";
-        cardEl.appendChild(newDivEl);
-    }
-    if(questionList.length != 0){
-        for(i=0; i<questionList.length; i++) {
-            askQuestion(questionList[i]);
-            questionList.splice(0,1);
-        }
-    }
-    else{
-        //clear the card
+        //otherwise, close the quia out
         cardEl.innerHTML = "";
-        var endTitleEl  = document.createElement("h1");
-        endTitleEl.classsName = "card";
-        endTitleEl.textContent = "You've completed the quiz!";
-        cardEl.appendChild(endTitle);
+        quizEnd();
     }
-
     }
+    
+//when the timer runs out, or they complete all the questions, they get a  new card
+//and the choice to end or restart
+var quizEnd =  function() {
+    var endTitleEl = document.createElement("h1");
+    endTitleEl.className = "card";
+    endTitleEl.textContent = "You've completed the quiz!";
+    cardEl.appendChild(endTitleEl);
+};
 
+//add a listener to start the whole thing.
+startButtonEl.addEventListener("click", function(){
+    runQuiz();
+    myTimer();
 
-var nextQuest = function(num) {
-    cardEl.InnerHTML = "";
-}
-
-var start = function() {
-askQuestion(question1);
-
-}
-
-startButtonEl.addEventListener("click", start);
+});
