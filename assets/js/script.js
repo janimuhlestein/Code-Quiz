@@ -112,6 +112,7 @@ var checkAns = function(choice){
         for(i=0; i<questionList.length; i++) {
             askQuestion(questionList[i]);
             questionList.splice(0,1);
+        }
     }
     else{
         //clear the card
@@ -124,7 +125,6 @@ var checkAns = function(choice){
 
     }
 
-}
 
 var nextQuest = function(num) {
     cardEl.InnerHTML = "";
