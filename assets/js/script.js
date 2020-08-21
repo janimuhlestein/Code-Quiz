@@ -148,14 +148,15 @@ var checkAns = function(textContent){
 //Our main function to run the quiz.
 var runQuiz = function() {
     //first, get the time
-    var timer = document.getElementById("counter").textContent;
+    var timeLeft = document.getElementById("counter").textContent;
+    timeLeft = parseInt(timeLeft);
     //If the question list array is not empty, or the timer is not up, ask questions
-    if(questionList.length !=0 && timer != "0") {
+    if(questionList.length !=0 && timeLeft != 1) {
            var questNum = questionList[0];
           askQuestion(questNum);
     }
     else {
-        //otherwise, close the quia out
+        //otherwise, close the quiz out
         cardEl.innerHTML = "";
         quizEnd();
     }
@@ -173,6 +174,5 @@ var quizEnd =  function() {
 //add a listener to start the whole thing.
 startButtonEl.addEventListener("click", function(){
     runQuiz();
-    myTimer();
-
+    timer = setInterval(myTimer,1000)
 });
