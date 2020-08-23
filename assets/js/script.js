@@ -307,7 +307,8 @@ var showScores = function() {
 
 var resetQuiz = function() {
     clearInterval(timer);
-       console.log(timer);
+    //have to reset the variables
+        numCorrect = 0;
        seconds = 60;
        var counter = document.getElementById("counter");
         counter.textContent = String(seconds);
