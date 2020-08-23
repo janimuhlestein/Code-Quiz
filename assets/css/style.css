@@ -1,3 +1,5 @@
+
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -17,6 +19,17 @@ header h3 {
 font-size: 15px;
 color: rgb(110, 4, 110);
 text-decoration: none;
+}
+
+header .buttonScore {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
+    background-color:rgb(110, 4, 110);
+   border:none;
+   margin:15px auto auto 20px;
+   font:inherit;
+   cursor:pointer;
+   outline:inherit;
 }
 
 .card {
@@ -67,8 +80,8 @@ text-decoration: none;
     padding: 5px;
     margin: 10px 0 0 40px;
     display: block;
-    width: 150px;
-    border-radius: 15px;;
+    width: 175px;
+    border-radius: 15px;
 }
 
 .quest-title {
@@ -91,9 +104,126 @@ text-decoration: none;
     color: lightslategrey;
     text-align: left;
     margin-left: 40px;
+    margin-right: 20px;
     margin-bottom: 20px;
     margin-top: 30px;
 }
 
+.restart {
+    display: flex;
+    justify-content: center;
 
+}
+
+.retart button {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 25px;
+    background-color: rgb(110, 4, 110);
+    color: white;
+    text-shadow: 1px 1px 2px black;
+    box-shadow: 1px 1px 2px black;
+    padding: 5px;
+    margin: 10px 0 0 40px;
+    display: block;
+    width: 175px;
+    border-radius: 15px;
+}
+
+.endText {
+    display: flex;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border: 1px 1px 1px slategrey;
+    justify-content: center;
+}
+
+.textDiv {
+    display: flex;
+    margin-top: 150px auto auto auto;
+    align-content:center;
+}
+
+.textDiv .textArea {
+    max-width: 200px;
+    max-height: 50px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    border: 2px solid darkslategray;
+    border-radius: 4px;
+    text-align: center;
+    padding: 10px;
+    margin: 100px auto auto auto;
+
+}
+
+.button .initBtn {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    background-color:rgb(110, 4, 110);
+    border-radius: 5px;
+    color: white;
+    text-shadow: 1px 1px 2px black;
+    box-shadow: 1px 1px 2px black;
+    padding: 5px;
+    margin: 20px auto auto auto;
+    display: block;  
+}
+
+.endDiv {
+    display:flex;
+    margin:30px auto auto auto;
+    justify-content: space-evenly;
+}
+
+.endDiv .endBtn {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    background-color:rgb(110, 4, 110);
+    border-radius: 5px;
+    color: white;
+    text-shadow: 1px 1px 2px black;
+    box-shadow: 1px 1px 2px black;
+    padding: 5px; 
+    width: 150px;
+    text-align: center;
+}
+
+.card .endTitles {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 22px;
+    color: rgb(110, 4, 110);
+    text-shadow: 1px 1px 2px black;
+}
+
+.scoreDiv {
+    display: block;
+    margin: auto;
+}
+
+.scoreDiv h3{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 15px;
+    text-align:center;
+}
+
+.scoreDiv h3 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 20px;
+    text-align: center;
+    padding: 25px 25px 20px 25px;
+}
+
+.scoreDiv .scoreBtn {
+    display:flex;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    background-color:rgb(110, 4, 110);
+    border-radius: 5px;
+    color: white;
+    text-shadow: 1px 1px 2px black;
+    box-shadow: 1px 1px 2px black;
+    padding: 5px; 
+    width: 150px;
+    margin: auto;
+    padding-left: 35px;
+}
 
